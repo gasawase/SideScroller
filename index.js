@@ -25,7 +25,20 @@ var doorsLevel1;
 var doorsLevel2;
 var doorsLevel3;
 var doorsLevel4;
+
+var topDoorSprite1;
+var topDoorSprite3;
+var topDoorSprite4;
+
+var leftDoorSprite1;
+var leftDoorSprite2;
+var leftDoorSprite3;
+
+var rightDoorSprite1;
+var rightDoorSprite2;
+
 door1Crossed = false;
+topDoorCrossed1 = false;
 
 function create() {
 
@@ -44,9 +57,9 @@ function create() {
     playerSprite.animations.add("up", [9, 10, 11], 10, true);
 
     level1();
-    level2();
-    level3();
-    level4();
+
+    // level3();
+    // level4();
 
     //controlling changing levels
     // do {
@@ -59,54 +72,84 @@ function create() {
 function update() {
     movePlayer();
     // var crossDoor = game.physics.arcade.collide(playerSprite, doors);
-    doorsLevel1.visible = false;
-    doorsLevel2.visible = false;
-    // doorsLevel3.visible = false;
-    doorsLevel4.visible = false;
-    game.physics.arcade.overlap(playerSprite, doorsLevel1, changeLevel, null, this);
+    // doorsLevel1.visible = false;
+    game.physics.arcade.overlap(playerSprite, topDoorSprite1, changeLevel, null, this);
     
     //if (door1Crossed = true) {
-//      level1Done = true;
+//      showLev2();
     //}
+}
+
+function showLev2 () {
+    doorsLevel1.visible = false;
+    doorsLevel3.visible = false;
+    doorsLevel4.visible = false;
+
+    decision2 = game.add.sprite(20, 5, "decision2");
+}
+
+function showLev3 () {
+    doorsLevel1.visible = false;
+    doorsLevel2.visible = false;
+    doorsLevel4.visible = false;
+
+    decision3 = game.add.sprite(20, 5, "decision3");
+}
+
+function showLev4 () {
+    doorsLevel1.visible = false;
+    doorsLevel2.visible = false;
+    doorsLevel3.visible = false;
+
+    decision4 = game.add.sprite(20, 5, "decision4");
 }
 
 function level1 () {
     doorsLevel1 = game.add.group();
-    var topDoorSprite1 = game.add.sprite(300, 66, "topDoor");
-    var leftDoorSprite1 = game.add.sprite(66, 300, "greenDoor");
-    var rightDoorSprite1 = game.add.sprite(498, 200, "purpleDoor");
+    topDoorSprite1 = game.add.sprite(300, 66, "topDoor");
+    leftDoorSprite1 = game.add.sprite(66, 300, "greenDoor");
+    rightDoorSprite1 = game.add.sprite(498, 200, "purpleDoor");
     doorsLevel1.add(topDoorSprite1);
-    doorsLevel1.enableBody = true;
+    // doorsLevel1.enableBody = true;
+    topDoorSprite1.enableBody = true;
+    leftDoorSprite1.enableBody = true;
+    rightDoorSprite1.enableBody = true;
     doorsLevel1.add(leftDoorSprite1);
     doorsLevel1.add(rightDoorSprite1); 
+    
 
     decision1 = game.add.sprite(20, 5, "decision1");
+
+    game.physics.arcade.enable(doorsLevel1);
     
     // var crossDoor = game.physics.arcade.collide(playerSprite, doorsLevel1);
 }
 
 function level2 () {
     doorsLevel2 = game.add.group();
-    var leftDoorSprite2 = game.add.sprite(498, 250, "greenDoor");
-    var rightDoorSprite2 = game.add.sprite(66, 250, "purpleDoor");
+    leftDoorSprite2 = game.add.sprite(498, 250, "greenDoor");
+    rightDoorSprite2 = game.add.sprite(66, 250, "purpleDoor");
+    leftDoorSprite2.enableBody = true;
+    rightDoorSprite2.enableBody = true;
     doorsLevel2.add(leftDoorSprite2);
     doorsLevel2.add(rightDoorSprite2);
-    
 }
 
 function level3 () {
     doorsLevel3 = game.add.group();
-    var topDoorSprite3 = game.add.sprite(330, 66, "topDoor");
-    var leftDoorSprite3 = game.add.sprite(66, 280, "greenDoor");
+    topDoorSprite3 = game.add.sprite(330, 66, "topDoor");
+    leftDoorSprite3 = game.add.sprite(66, 280, "greenDoor");
+    topDoorSprite3.enableBody = true;
+    leftDoorSprite3.enableBody = true;
     doorsLevel3.add(topDoorSprite3);
     doorsLevel3.add(leftDoorSprite3);
 }
 
 function level4 () {
     doorsLevel4 = game.add.group();
-    var topDoorSprite4 = game.add.sprite(20, 50, "topDoor");
+    topDoorSprite4 = game.add.sprite(260, 66, "topDoor");
     doorsLevel4.add(topDoorSprite4);
-
+    topDoorSprite4.enableBody = true;
 }
 
 function movePlayer () {
@@ -154,6 +197,5 @@ function movePlayer () {
 }
 
 function changeLevel () {
-
     console.log("this works");
 }
