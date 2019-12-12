@@ -76,9 +76,9 @@ function overlappedDoors () {//tests to see if overlapped
     // var top1Bool = false;
     var right1Bool = false;
     var left1Bool = false;
-    if ((game.physics.arcade.overlap(playerSprite, topDoorSprite1, changeLevel2, null, this)) = true) {
-        console.log("kill me pleaase");
-    }
+    // if ((game.physics.arcade.overlap(playerSprite, topDoorSprite1, changeLevel2, null, this)) = true) {
+    //     console.log("kill me pleaase");
+    // }
     top1Bool = game.physics.arcade.overlap(playerSprite, topDoorSprite1, changeLevel2, null, this);
     right1Bool = game.physics.arcade.overlap(playerSprite, rightDoorSprite1, changeLevel2, null, this);
     left1Bool = game.physics.arcade.overlap(playerSprite, leftDoorSprite1, changeLevel2, null, this);
