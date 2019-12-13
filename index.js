@@ -36,19 +36,14 @@ var goodEndAdd = 0;
 var badEndAdd = 0;
 var neutralEndAdd = 0;
 
-var top1Bool;
-var right1Bool;
-
 function create() {
 
 
     backgroundSprite = game.add.sprite (50 , 50, "base");
     playerSprite = game.add.sprite(290, 290, "girl");
 
-    //add door groups
+    //add 1st door group
     doorsLevel1 = game.add.group();
-    // doorsLevel3 = game.add.group();
-    // doorsLevel4 = game.add.group();
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.setBounds(80, 80, 430, 418); //left most, top most, right most, bottom most
@@ -73,37 +68,23 @@ function update() {
 
 function overlappedDoors () {//tests to see if overlapped
     //Level 1
-    // var top1Bool = false;
-    var right1Bool = false;
-    var left1Bool = false;
-    // if ((game.physics.arcade.overlap(playerSprite, topDoorSprite1, changeLevel2, null, this)) = true) {
-    //     console.log("kill me pleaase");
-    // }
-    top1Bool = game.physics.arcade.overlap(playerSprite, topDoorSprite1, changeLevel2, null, this);
-    right1Bool = game.physics.arcade.overlap(playerSprite, rightDoorSprite1, changeLevel2, null, this);
-    left1Bool = game.physics.arcade.overlap(playerSprite, leftDoorSprite1, changeLevel2, null, this);
+    game.physics.arcade.overlap(playerSprite, topDoorSprite1, changeLevelTop2, null, this)
+    game.physics.arcade.overlap(playerSprite, rightDoorSprite1, changeLevelRight2, null, this)
+    game.physics.arcade.overlap(playerSprite, leftDoorSprite1, changeLevelLeft2, null, this)
 
     //Level 2
-    var right2Bool = false;
-    var left2Bool = false;
-    right2Bool = game.physics.arcade.overlap(playerSprite, rightDoorSprite2, changeLevel3, null, this);
-    left2Bool = game.physics.arcade.overlap(playerSprite, leftDoorSprite2, changeLevel3, null, this);
+    game.physics.arcade.overlap(playerSprite, rightDoorSprite2, changeLevelRight3, null, this);
+    game.physics.arcade.overlap(playerSprite, leftDoorSprite2, changeLevelLeft3, null, this);
 
     //Level 3
-    var left3Bool = false;
-    var top3Bool = false;
-    left3Bool = game.physics.arcade.overlap(playerSprite, leftDoorSprite3, changeLevel4, null, this);
-    top3Bool = game.physics.arcade.overlap(playerSprite, topDoorSprite3, changeLevel4, null, this);
+    game.physics.arcade.overlap(playerSprite, leftDoorSprite3, changeLevelLeft4, null, this);
+    game.physics.arcade.overlap(playerSprite, topDoorSprite3, changeLevelTop4, null, this);
 
     //Level 4
-    var top4Bool = false;
-    top4Bool = game.physics.arcade.overlap(playerSprite, topDoorSprite4, showEnding, null, this);
+    game.physics.arcade.overlap(playerSprite, topDoorSprite4, showEnding, null, this);
 }
 
 function showLev1 () {
-    console.log(badEndAdd);
-    console.log(goodEndAdd);
-    console.log(neutralEndAdd);
     level1Stage();
 
     decision1 = game.add.sprite(20, 5, "decision1");
@@ -151,7 +132,7 @@ function showLev4 () {
 function level1Stage () {
     topDoorSprite1 = game.add.sprite(300, 66, "topDoor");
     leftDoorSprite1 = game.add.sprite(66, 400, "greenDoor");
-    rightDoorSprite1 = game.add.sprite(498, 200, "purpleDoor");
+    rightDoorSprite1 = game.add.sprite(498, 400, "purpleDoor");
     // doorsLevel1.enableBody = true;
     topDoorSprite1.enableBody = true;
     leftDoorSprite1.enableBody = true;
@@ -240,56 +221,62 @@ function movePlayer () {
     }
 }
 
-function changeLevel2 () {
-    console.log(top1Bool);
-    // console.log(right2Bool);
-    console.log(right1Bool);
-    console.log(badEndAdd);
-    console.log(goodEndAdd);
-    console.log(neutralEndAdd);
+function changeLevelTop2 () {
+
+    badEndAdd += 1;
+
     doorsLevel2 = game.add.group();
-    playerSprite.x = 290;
-    playerSprite.y = 290;
-    ///Checking Level 1 Totals
-    if (top1Bool = false) {
-        badEndAdd += 1;
-    }
-    else if (right1Bool = true) {
-        goodEndAdd += 1;
-    }
-    else if (left1Bool = true) {
-        neutralEndAdd += 1;
-    }
     showLev2();
 }
 
-function changeLevel3 () {
-    console.log(badEndAdd);
-    console.log(goodEndAdd);
-    console.log(neutralEndAdd);
+function changeLevelRight2 () {
+
+    goodEndAdd += 1;
+
+    doorsLevel2 = game.add.group();
+
+    showLev2();
+}
+
+function changeLevelLeft2 () {
+
+    neutralEndAdd += 1;
+
+    doorsLevel2 = game.add.group();
+
+    showLev2();
+}
+
+function changeLevelRight3 () {
+    goodEndAdd += 1;
+
     doorsLevel3 = game.add.group();
-    //Checking Level 2 Totals
-    if (right2Bool = true) {
-        goodEndAdd += 1;
-    }
-    else if (left2Bool = true) {
-        badEndAdd += 1;
-    }
     showLev3();
 }
 
-function changeLevel4 () {
-    console.log(badEndAdd);
-    console.log(goodEndAdd);
-    console.log(neutralEndAdd);
+function changeLevelLeft3 () {
+
+    badEndAdd += 1;
+
+    doorsLevel3 = game.add.group();
+
+    showLev3();
+}
+
+function changeLevelLeft4 () {
+
+    badEndAdd += 1;
+
     doorsLevel4 = game.add.group();
-    //Checking Level 3 Totals
-    if (left3Bool = true) {
-        badEndAdd += 1
-    }
-    else if (top3Bool = true) {
-        goodEndAdd += 1;
-    }
+
+    showLev4();
+}
+
+function changeLevelTop4 () {
+
+    goodEndAdd += 1;
+
+    doorsLevel4 = game.add.group(); 
     showLev4();
 }
 
@@ -299,10 +286,11 @@ function showEnding () {
     topDoorSprite4.kill();
     playerSprite.kill();
 
-    console.log(badEndAdd);
-    console.log(goodEndAdd);
-    console.log(neutralEndAdd);
-    if (badEndAdd >= 2) {
+    if (neutralEndAdd == 3) {
+        neutralEnding = game.add.sprite(0, 0, "neutralEnding");
+    }
+    
+    else if (badEndAdd >= 2) {
         badEnding = game.add.sprite(0, 0, "badEnding2");
     }
     else if (goodEndAdd >= 2) {
